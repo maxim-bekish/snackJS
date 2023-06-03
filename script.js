@@ -3,12 +3,18 @@ let ctx = canvas.getContext("2d");
 let startSpan = document.getElementById("start");
 let counterCheck = document.getElementById("counterCheck");
 let yourResult = document.getElementById("result");
+let maxNumber = document.getElementById("maxNumber");
+let names = document.getElementById("name");
 
+let maxNumberRecord = [];
+let playerName;
+let maxRecord;
 let dir;
 let box = 32;
-let record = [];
+
 let snake = [];
 let counter = 0;
+let record = [];
 
 const filed = new Image();
 filed.src = "./png/field.png";
@@ -65,8 +71,24 @@ function sneckAteHimself(newHead, arr) {
   for (let i = 0; i < arr.length; i++) {
     if (newHead.x == arr[i].x && newHead.y == arr[i].y) {
       dir = "stop";
-      sessionStorage.setItem("lastСounter", counter);
-
+      sessionStorage.setItem("lastСounter", counter); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      if (localStorage.getItem("reci")) {
+        record = JSON.parse(localStorage.getItem("reci"));
+        record.push({
+          name: names.value,
+          rec: counter,
+        });
+        let x = JSON.stringify(record);
+        localStorage.setItem("reci", x);
+      } else {
+        record.push({
+          name: names.value,
+          rec: counter,
+        });
+        let x = JSON.stringify(record);
+        localStorage.setItem("reci", x);
+      }
+      localStorage.removeItem("key");
       snake = Array();
       newHead.x = 9 * box;
       newHead.y = 10 * box;
@@ -79,7 +101,14 @@ function sneckAteHimself(newHead, arr) {
 }
 
 function drawField() {
+  bigNum();
   yourResultFunction();
+  // let x=localStorage.getItem('record');
+  // let y=[]
+  // y.push(x)
+  // console.log(y)
+  //  Math.max(...record);
+  // maxNumber.innerHTML=
   ctx.drawImage(filed, 0, 0);
   ctx.drawImage(foodIMG, food.x, food.y);
   for (let i = 0; i < snake.length; i++) {
@@ -105,15 +134,31 @@ function drawField() {
     snakeY > 17 * box
   ) {
     dir = "stop";
-    sessionStorage.setItem("lastСounter", counter);
+    sessionStorage.setItem("lastСounter", counter); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (localStorage.getItem("reci")) {
+      record = JSON.parse(localStorage.getItem("reci"));
+      record.push({
+        name: names.value,
+        rec: counter,
+      });
+      let x = JSON.stringify(record);
+      localStorage.setItem("reci", x);
+    } else {
+      record.push({
+        name: names.value,
+        rec: counter,
+      });
+      let x = JSON.stringify(record);
+      localStorage.setItem("reci", x);
+    }
+    localStorage.removeItem("key");
     snake = Array();
     snakeX = 9 * box;
     snakeY = 10 * box;
-    localStorage.removeItem("key");
     counter = 0;
+    startSpan.innerHTML = "Заново? Нажимай Enter";
     counterCheck.innerHTML = `у тебя ${counter} очков`;
     document.addEventListener("keydown", dirSnake);
-    startSpan.innerHTML = "Заново? Нажимай Enter";
   }
   if (dir == "left") snakeX -= box;
   if (dir == "right") snakeX += box;
@@ -128,11 +173,43 @@ function drawField() {
 
   snake.unshift(newHead);
 }
+document.addEventListener("DOMContentLoaded", () =>
+  sessionStorage.removeItem("lastСounter")
+);
 
-function yourResultFunction() {
-  yourResult.innerHTML = `твой последний результат ${sessionStorage.getItem(
-    "lastСounter"
-  )} очков`;
+function bigNum() {
+  if (localStorage.getItem("reci")) {
+    let maxrecord = JSON.parse(localStorage.getItem("reci"));
+
+    for (let i = 0; i < maxrecord.length; i++) {
+      maxNumberRecord.push(maxrecord[i].rec);
+    }
+    let bigNumber = Math.max.apply(null, maxNumberRecord);
+
+    maxNumber.innerHTML = `Рекорд  ${bigNumber} очков  `;
+  } else {
+    maxNumber.innerHTML = `Рекорда нет`;
+  }
 }
+function yourResultFunction() {
+  if (sessionStorage.getItem("lastСounter")) {
+    yourResult.innerHTML = `${
+      names.value
+    }, твой последний результат ${sessionStorage.getItem("lastСounter")} очков`;
+  } else {
+    yourResult.innerHTML = `${names.value} это твой первая игра `;
+  }
+}
+yourResult.style.display = "none";
+startSpan.style.display = "none";
+counterCheck.style.display = "none";
+document.getElementById("button").addEventListener("click", () => {
+  yourResult.style.display = "block";
+  startSpan.style.display = "block";
+  counterCheck.style.display = "block";
+  canvas.style.display = "block";
+  
+  document.querySelector(".form").style.display = "none";
 
-let game = setInterval(drawField, 200);
+  setInterval(drawField, 200);
+});
