@@ -1,4 +1,5 @@
 let canvas = document.getElementById("canvas");
+let canvasText = document.getElementById("canvasText");
 let ctx = canvas.getContext("2d");
 let startSpan = document.getElementById("start");
 let counterCheck = document.getElementById("counterCheck");
@@ -26,35 +27,39 @@ let food = {
   y: Math.floor(Math.random() * 15 + 3) * box,
 };
 counterCheck.innerHTML = `у тебя ${counter} очков`;
-document.addEventListener("keydown", dirSnake);
-document.addEventListener("keydown", validityKey);
+startSpan.addEventListener("click", dirSnake);
+
 snake[0] = { x: 9 * box, y: 10 * box };
 
-function dirSnake(event) {
-  if (event.code == "Enter") {
-    localStorage.setItem("key", "Enter");
-    setTimeout(() => {
-      let score = 2;
-      startSpan.innerHTML = `Игра начнется через ${score}`;
-      setInterval(() => {
-        score--;
-        if (score >= 0) {
-          startSpan.innerHTML = `Игра начнется через ${score}`;
-        }
-        if (score == 0) {
-          dir = "left";
-          startSpan.innerHTML = "Игра началась";
-        }
-        if (score < 0) {
-          score = -1;
-        }
-      }, 1000);
-    }, 0);
-  }
-}
+function dirSnake() {
+  // setTimeout(() => , 2000);
 
-function validityKey(event) {
-  if (localStorage.getItem("key") == "Enter") {
+  // localStorage.setItem("key", "Enter");
+  setTimeout(() => {
+    let score = 2;
+    startSpan.style.display = "block";
+    startSpan.innerHTML = `Игра начнется через ${score}`;
+
+    setInterval(() => {
+      score--;
+              console.log(score);
+      if (score >= 0) {
+        startSpan.style.display = "block";
+        startSpan.innerHTML = `Игра начнется через ${score}`;
+      }
+      if (score == 0) {
+        document.addEventListener("keydown",  validityKey);
+        console.log(score);
+        dir = "left";
+        startSpan.style.display = "none";
+      }
+      if (score < 0) {
+        score = -1;
+      }
+    }, 1000);
+  }, 0);
+}
+ function validityKey(event) {
     if (event.code == "ArrowUp" && dir != "down") {
       dir = "up";
     } else if (event.code == "ArrowDown" && dir != "up") {
@@ -65,7 +70,8 @@ function validityKey(event) {
       dir = "right";
     }
   }
-}
+// // // // // // // // // // // // // // // // // // // // // // // // // // разобраться, почему валдация срабатываает всегда!
+
 
 function sneckAteHimself(newHead, arr) {
   for (let i = 0; i < arr.length; i++) {
@@ -93,9 +99,10 @@ function sneckAteHimself(newHead, arr) {
       newHead.x = 9 * box;
       newHead.y = 10 * box;
       counter = 0;
+      startSpan.style.display = "block";
       startSpan.innerHTML = "Заново? Нажимай Enter";
       counterCheck.innerHTML = `у тебя ${counter} очков`;
-      document.addEventListener("keydown", dirSnake);
+      startSpan.addEventListener("click", dirSnake);
     }
   }
 }
@@ -109,7 +116,9 @@ function drawField() {
   // console.log(y)
   //  Math.max(...record);
   // maxNumber.innerHTML=
+
   ctx.drawImage(filed, 0, 0);
+
   ctx.drawImage(foodIMG, food.x, food.y);
   for (let i = 0; i < snake.length; i++) {
     i == 0 ? (ctx.fillStyle = "green") : (ctx.fillStyle = "red");
@@ -156,9 +165,10 @@ function drawField() {
     snakeX = 9 * box;
     snakeY = 10 * box;
     counter = 0;
+    startSpan.style.display = "block";
     startSpan.innerHTML = "Заново? Нажимай Enter";
     counterCheck.innerHTML = `у тебя ${counter} очков`;
-    document.addEventListener("keydown", dirSnake);
+    startSpan.addEventListener("click", dirSnake);
   }
   if (dir == "left") snakeX -= box;
   if (dir == "right") snakeX += box;
@@ -200,16 +210,18 @@ function yourResultFunction() {
     yourResult.innerHTML = `${names.value} это твой первая игра `;
   }
 }
-yourResult.style.display = "none";
-startSpan.style.display = "none";
-counterCheck.style.display = "none";
+// yourResult.style.display = "none";
+// startSpan.style.display = "none";
+// counterCheck.style.display = "none";
 document.getElementById("button").addEventListener("click", () => {
   yourResult.style.display = "block";
   startSpan.style.display = "block";
   counterCheck.style.display = "block";
   canvas.style.display = "block";
-  
-  document.querySelector(".form").style.display = "none";
 
-  setInterval(drawField, 200);
+  // document.querySelector(".form").style.display = "none";
+
+  // setInterval(drawField, 100);
 });
+document.querySelector(".form").style.display = "none";
+setInterval(drawField, 100);
