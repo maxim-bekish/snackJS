@@ -4,14 +4,14 @@ let ctx = canvas.getContext("2d");
 let startSpan = document.getElementById("start");
 let counterCheck = document.getElementById("counterCheck");
 let yourResult = document.getElementById("result");
-let maxNumber = document.getElementById("maxNumber");
+
 let names = document.getElementById("name");
 
-let maxNumberRecord = [];
 let playerName;
 let maxRecord;
 let dir;
 let box = 32;
+import { bigNumRecord, yourResultFunction } from "./bigNumRecord.js";
 
 let snake = [];
 let counter = 0;
@@ -26,15 +26,13 @@ let food = {
   x: Math.floor(Math.random() * 17 + 1) * box,
   y: Math.floor(Math.random() * 15 + 3) * box,
 };
-counterCheck.innerHTML = `у тебя ${counter} очков`;
+counterCheck.innerHTML = ` тут твои очки`;
 startSpan.addEventListener("click", dirSnake);
 
 snake[0] = { x: 9 * box, y: 10 * box };
 
 function dirSnake() {
-  // setTimeout(() => , 2000);
-
-  // localStorage.setItem("key", "Enter");
+  // sessionStorage.setItem("mouse", "click");
   setTimeout(() => {
     let score = 2;
     startSpan.style.display = "block";
@@ -42,13 +40,14 @@ function dirSnake() {
 
     setInterval(() => {
       score--;
-              console.log(score);
+      console.log(score);
       if (score >= 0) {
         startSpan.style.display = "block";
         startSpan.innerHTML = `Игра начнется через ${score}`;
       }
       if (score == 0) {
-        document.addEventListener("keydown",  validityKey);
+        sessionStorage.setItem("arrowStop", "yes");
+        document.addEventListener("keydown", validityKey);
         console.log(score);
         dir = "left";
         startSpan.style.display = "none";
@@ -59,7 +58,9 @@ function dirSnake() {
     }, 1000);
   }, 0);
 }
- function validityKey(event) {
+
+function validityKey(event) {
+  if (sessionStorage.getItem("arrowStop") == "yes") {
     if (event.code == "ArrowUp" && dir != "down") {
       dir = "up";
     } else if (event.code == "ArrowDown" && dir != "up") {
@@ -70,14 +71,16 @@ function dirSnake() {
       dir = "right";
     }
   }
+}
 // // // // // // // // // // // // // // // // // // // // // // // // // // разобраться, почему валдация срабатываает всегда!
-
 
 function sneckAteHimself(newHead, arr) {
   for (let i = 0; i < arr.length; i++) {
     if (newHead.x == arr[i].x && newHead.y == arr[i].y) {
       dir = "stop";
-      sessionStorage.setItem("lastСounter", counter); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      sessionStorage.setItem("lastСounter", counter); /////////////////////////////////////////////  в себя///////////////////////////////////////////////////////////////
+      sessionStorage.setItem("arrowStop", "no"); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
       if (localStorage.getItem("reci")) {
         record = JSON.parse(localStorage.getItem("reci"));
         record.push({
@@ -100,22 +103,18 @@ function sneckAteHimself(newHead, arr) {
       newHead.y = 10 * box;
       counter = 0;
       startSpan.style.display = "block";
-      startSpan.innerHTML = "Заново? Нажимай Enter";
+      startSpan.innerHTML = "Заново? Нажимай меня";
       counterCheck.innerHTML = `у тебя ${counter} очков`;
       startSpan.addEventListener("click", dirSnake);
     }
   }
 }
+let snakeX;
+let snakeY;
 
 function drawField() {
-  bigNum();
-  yourResultFunction();
-  // let x=localStorage.getItem('record');
-  // let y=[]
-  // y.push(x)
-  // console.log(y)
-  //  Math.max(...record);
-  // maxNumber.innerHTML=
+  bigNumRecord();
+  yourResultFunction(yourResult, names);
 
   ctx.drawImage(filed, 0, 0);
 
@@ -124,8 +123,8 @@ function drawField() {
     i == 0 ? (ctx.fillStyle = "green") : (ctx.fillStyle = "red");
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
-  let snakeX = snake[0].x;
-  let snakeY = snake[0].y;
+  snakeX = snake[0].x;
+  snakeY = snake[0].y;
   if (snakeX == food.x && snakeY == food.y) {
     counter++;
     counterCheck.innerHTML = `у тебя ${counter} очков`;
@@ -136,6 +135,7 @@ function drawField() {
   } else {
     snake.pop();
   }
+
   if (
     snakeX < box ||
     snakeX > 17 * box ||
@@ -143,9 +143,10 @@ function drawField() {
     snakeY > 17 * box
   ) {
     dir = "stop";
-    sessionStorage.setItem("lastСounter", counter); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    sessionStorage.setItem("lastСounter", counter); /////////////////////////////////////////////// в стену/////////////////////////////////////////////////////////////
     if (localStorage.getItem("reci")) {
       record = JSON.parse(localStorage.getItem("reci"));
+      sessionStorage.setItem("arrowStop", "no");
       record.push({
         name: names.value,
         rec: counter,
@@ -172,7 +173,7 @@ function drawField() {
   }
   if (dir == "left") snakeX -= box;
   if (dir == "right") snakeX += box;
-  if (dir == "up") snakeY -= box;
+  if (dir == "up") snakeY -= box;                                 //   разобраться в разделе функции
   if (dir == "down") snakeY += box;
   let newHead = {
     x: snakeX,
@@ -183,33 +184,11 @@ function drawField() {
 
   snake.unshift(newHead);
 }
+
 document.addEventListener("DOMContentLoaded", () =>
   sessionStorage.removeItem("lastСounter")
 );
 
-function bigNum() {
-  if (localStorage.getItem("reci")) {
-    let maxrecord = JSON.parse(localStorage.getItem("reci"));
-
-    for (let i = 0; i < maxrecord.length; i++) {
-      maxNumberRecord.push(maxrecord[i].rec);
-    }
-    let bigNumber = Math.max.apply(null, maxNumberRecord);
-
-    maxNumber.innerHTML = `Рекорд  ${bigNumber} очков  `;
-  } else {
-    maxNumber.innerHTML = `Рекорда нет`;
-  }
-}
-function yourResultFunction() {
-  if (sessionStorage.getItem("lastСounter")) {
-    yourResult.innerHTML = `${
-      names.value
-    }, твой последний результат ${sessionStorage.getItem("lastСounter")} очков`;
-  } else {
-    yourResult.innerHTML = `${names.value} это твой первая игра `;
-  }
-}
 // yourResult.style.display = "none";
 // startSpan.style.display = "none";
 // counterCheck.style.display = "none";
@@ -220,8 +199,6 @@ document.getElementById("button").addEventListener("click", () => {
   canvas.style.display = "block";
 
   // document.querySelector(".form").style.display = "none";
-
-  // setInterval(drawField, 100);
 });
 document.querySelector(".form").style.display = "none";
 setInterval(drawField, 100);
