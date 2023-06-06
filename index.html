@@ -7,27 +7,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Snake</title>
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./script.js" ></script>
-  <script type="module" src="./bigNumRecord.js" ></script>
+
+
+  <script type="module" src="./script.js"></script>
+  <script type="module" src="./function.js"></script>
+  <script type="module" src="./valid.js"></script>
 </head>
 
 <body>
-  <div class="container">
-    <div id="counterCheck">счет</div>
-    <div id="maxNumber"></div>
 
-    <div id="result"></div>
-    <div class="form">
-      <input placeholder="say your name" id='name' class='name' type="text">
-      <button id="button" class="button">Сontinue</button>
+  <div class="container">
+
+    <div class="wrapperHeader" id="title">
+      <div class="wrapperHeader__title"  id="counterCheck">тут твои очки</div>
+      <div class="wrapperHeader__title" id="maxNumber"></div>
+      <div class="wrapperHeader__title" id="result"></div>
+    </div>
+
+    <div id="form" class="form">
+      <input placeholder="Enter your name" id='name' class='name' type="text">
+      <button  id="button" class="button">Сontinue</button>
     </div>
 
     <div class="field">
       <div class="start" id="start">Нaжмите Enter</div>
+   
       <canvas width='608' height="608" id="canvas"> </canvas>
     </div>
-
-
 
   </div>
 </body>

@@ -1,6 +1,6 @@
+import {validName} from './valid.js'
 
 function bigNumRecord() {
-  let maxNumber = document.getElementById("maxNumber");
   let maxNumberRecord = [];
   if (localStorage.getItem("reci")) {
     let maxrecord = JSON.parse(localStorage.getItem("reci"));
@@ -16,7 +16,6 @@ function bigNumRecord() {
   }
 }
 
-
 function yourResultFunction(yourResult, names) {
   yourResult = document.getElementById("result");
   if (sessionStorage.getItem("lastСounter")) {
@@ -27,5 +26,22 @@ function yourResultFunction(yourResult, names) {
     yourResult.innerHTML = `${names.value} это твой первая игра `;
   }
 }
+
+
+document.addEventListener("DOMContentLoaded", () =>
+  sessionStorage.removeItem("lastСounter")
+);
+// document.querySelector(".form").style.display = "none";
+document.getElementById("start").style.display = "none";
+document.getElementById("title").style.display = "none";
+document.getElementById("canvas").style.display = "none";
+
+document.getElementById("button").addEventListener("click", () => {
+  document.getElementById("start").style.display = "block";
+  document.getElementById("title").style.display = "flex";
+  document.getElementById("canvas").style.display = "block";
+validName();
+  document.querySelector(".form").style.display = "none";
+});
 
 export { bigNumRecord, yourResultFunction };
