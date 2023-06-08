@@ -62,7 +62,7 @@ body {
   position: absolute;
   top: 310px;
   z-index: 2;
-  border: 0;
+ border: 2px solid rgb(180, 182, 228);
   border-radius: 15px;
   box-sizing: border-box;
   color: rgb(47, 43, 111);
@@ -72,7 +72,7 @@ body {
   cursor: pointer;
 }
 .start:hover {
-  border: 2px solid rgb(180, 182, 228);
+ 
   transform: scale(1.03);
 }
 .wrapperHeader__title {

@@ -10,7 +10,7 @@ import {bigNumRecord,  yourResultFunction,} from "./function.js";
 // document.getElementById("button").addEventListener("click", validName);
 
 let dir;
-let box = 32;
+let box = 60;    // 32
 let snake = [];
 let counter = 0;
 let record = [];
@@ -19,14 +19,21 @@ filed.src = "./png/field.png";
 const foodIMG = new Image();
 foodIMG.src = "./png/food.png";
 
-let food = {
-  x: Math.floor(Math.random() * 17 + 1) * box,
-  y: Math.floor(Math.random() * 15 + 3) * box,
+// let food = {
+//   x: Math.floor(Math.random() * 17 + 1) * box,
+//   y: Math.floor(Math.random() * 15 + 3) * box,
+// };
+
+
+ let food = {
+  x: Math.floor(Math.random() * 11) * box,
+  y: Math.floor(Math.random() * 11) * box,
 };
 
 startSpan.addEventListener("click", dirSnake);
 
-snake[0] = { x: 9 * box, y: 10 * box };
+// snake[0] = { x: 9 * box, y: 10 * box };
+snake[0] = { x: 5 * box, y: 5 * box };
 
 function dirSnake() {
 
@@ -37,7 +44,7 @@ function dirSnake() {
 
     setInterval(() => {
       score--;
-      console.log(score);
+      console.log('rrrrrrr'+score);
       if (score >= 0) {
         startSpan.style.display = "block";
         startSpan.innerHTML = `Игра начнется через ${score}`;
@@ -100,8 +107,8 @@ function gameOverStart(newHead) {
   }
   localStorage.removeItem("key");
   snake = Array();
-  newHead.x = 9 * box;
-  newHead.y = 10 * box;
+  newHead.x = 5 * box;
+  newHead.y = 5 * box;
   counter = 0;
   startSpan.style.display = "block";
   startSpan.innerHTML = "Заново? Нажимай меня";
@@ -130,18 +137,18 @@ function drawField() {
     counter++;
     counterCheck.innerHTML = `у тебя ${counter} очков`;
     food = {
-      x: Math.floor(Math.random() * 17 + 1) * box,
-      y: Math.floor(Math.random() * 15 + 3) * box,
+      x: Math.floor(Math.random() * 11) * box,
+      y: Math.floor(Math.random() * 11) * box,
     };
   } else {
     snake.pop();
   }
 
   if (
-    newHead.x < box ||
-    newHead.x > 17 * box ||
-    newHead.y < box * 3 ||
-    newHead.y > 17 * box
+    newHead.x < 0 ||
+    newHead.x > 10 * box ||
+    newHead.y < 0 ||
+    newHead.y > 10 * box
   ) {
     gameOverStart(newHead);
   }
@@ -158,4 +165,4 @@ function drawField() {
   snake.unshift(newHead);
 }
 
-setInterval(drawField, 100);
+setInterval(drawField, 300);
