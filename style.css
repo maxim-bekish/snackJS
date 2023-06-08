@@ -9,6 +9,18 @@ body {
   flex-direction: column;
   position: relative;
 }
+canvas{
+box-shadow: 0 0 66px 5px #6CBDDB;
+
+}
+.zmeia{
+  width: 60px;
+  height: 60px;
+  /* box-sizing: border-box; */
+  /* padding: 7.5px; */
+  /* background: black; */
+  /* border-radius: 50%; */
+}
 .form {
   margin-top: 20%;
   display: flex;

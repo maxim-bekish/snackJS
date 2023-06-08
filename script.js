@@ -4,13 +4,12 @@ let startSpan = document.getElementById("start");
 let counterCheck = document.getElementById("counterCheck");
 let yourResult = document.getElementById("result");
 let names = document.getElementById("name");
-// import {validName} from './valid.js';
-import {bigNumRecord,  yourResultFunction,} from "./function.js";
+// let zmeia = document.getElementById("zmeia");
 
-// document.getElementById("button").addEventListener("click", validName);
+import { bigNumRecord, yourResultFunction } from "./function.js";
 
 let dir;
-let box = 60;    // 32
+let box = 60; // 32
 let snake = [];
 let counter = 0;
 let record = [];
@@ -19,24 +18,16 @@ filed.src = "./png/field.png";
 const foodIMG = new Image();
 foodIMG.src = "./png/food.png";
 
-// let food = {
-//   x: Math.floor(Math.random() * 17 + 1) * box,
-//   y: Math.floor(Math.random() * 15 + 3) * box,
-// };
-
-
- let food = {
+let food = {
   x: Math.floor(Math.random() * 11) * box,
   y: Math.floor(Math.random() * 11) * box,
 };
 
-startSpan.addEventListener("click", dirSnake);
+canvas.addEventListener("click", dirSnake);
 
-// snake[0] = { x: 9 * box, y: 10 * box };
 snake[0] = { x: 5 * box, y: 5 * box };
 
 function dirSnake() {
-
   setTimeout(() => {
     let score = 2;
     startSpan.style.display = "block";
@@ -44,7 +35,7 @@ function dirSnake() {
 
     setInterval(() => {
       score--;
-      console.log('rrrrrrr'+score);
+      console.log("rrrrrrr" + score);
       if (score >= 0) {
         startSpan.style.display = "block";
         startSpan.innerHTML = `Игра начнется через ${score}`;
@@ -83,7 +74,7 @@ function sneckAteHimself(newHead, arr) {
     }
   }
 }
-
+//  когда змейка погибает
 function gameOverStart(newHead) {
   dir = "stop";
   sessionStorage.setItem("lastСounter", counter);
@@ -113,8 +104,7 @@ function gameOverStart(newHead) {
   startSpan.style.display = "block";
   startSpan.innerHTML = "Заново? Нажимай меня";
   counterCheck.innerHTML = `у тебя ${counter} очков`;
-  startSpan.addEventListener("click", dirSnake);
-  // ++++++++++++++++++++++++++++
+  canvas.addEventListener("click", dirSnake);
 }
 
 function drawField() {
@@ -126,13 +116,13 @@ function drawField() {
   let newHead = {
     x: snake[0].x,
     y: snake[0].y,
-  };
-  for (let i = 0; i < snake.length; i++) {
-    i == 0 ? (ctx.fillStyle = "green") : (ctx.fillStyle = "red");
-    ctx.fillRect(snake[i].x, snake[i].y, box, box);
-    
-  }
 
+  };
+  
+  for (let i = 0; i < snake.length; i++) {
+    i == 0 ? (ctx.fillStyle = "#0C455B") : (ctx.fillStyle = "#6CBDDB");
+    ctx.fillRect(snake[i].x, snake[i].y, box, box);
+  }
   if (newHead.x == food.x && newHead.y == food.y) {
     counter++;
     counterCheck.innerHTML = `у тебя ${counter} очков`;
@@ -143,7 +133,6 @@ function drawField() {
   } else {
     snake.pop();
   }
-
   if (
     newHead.x < 0 ||
     newHead.x > 10 * box ||
@@ -152,17 +141,15 @@ function drawField() {
   ) {
     gameOverStart(newHead);
   }
-
-  if (dir == "left") newHead.x -= box;
+  // один шаг
+  if (dir == "left") newHead.x -= box ;
   if (dir == "right") newHead.x += box;
   if (dir == "up") newHead.y -= box;
   if (dir == "down") newHead.y += box;
 
   sneckAteHimself(newHead, snake);
 
-  
-
   snake.unshift(newHead);
 }
 
-setInterval(drawField, 300);
+setInterval(drawField, 200);

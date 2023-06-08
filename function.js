@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () =>
 // document.querySelector(".form").style.display = "none";
 document.getElementById("start").style.display = "none";
 document.getElementById("title").style.display = "none";
-// document.getElementById("canvas").style.display = "none";
+document.getElementById("canvas").style.display = "none";
 
 document.getElementById("button").addEventListener("click", () => {
   document.getElementById("start").style.display = "block";
