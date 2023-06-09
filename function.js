@@ -31,15 +31,17 @@ function yourResultFunction(yourResult, names) {
 document.addEventListener("DOMContentLoaded", () =>
   sessionStorage.removeItem("lastСounter")
 );
-// document.querySelector(".form").style.display = "none";
+document.querySelector(".form").style.display = "none"
 document.getElementById("start").style.display = "none";
 document.getElementById("title").style.display = "none";
-document.getElementById("canvas").style.display = "none";
+// document.getElementById("canvas").style.display = "none";
+// document.getElementById("eda").style.display = "none";
 
 document.getElementById("button").addEventListener("click", () => {
   document.getElementById("start").style.display = "block";
   document.getElementById("title").style.display = "flex";
   document.getElementById("canvas").style.display = "block";
+  document.getElementById("eda").style.display = "block";
 validName();
   document.querySelector(".form").style.display = "none";
 });

@@ -4,29 +4,33 @@ let startSpan = document.getElementById("start");
 let counterCheck = document.getElementById("counterCheck");
 let yourResult = document.getElementById("result");
 let names = document.getElementById("name");
-// let zmeia = document.getElementById("zmeia");
+let eda = document.getElementById("eda");
 
 import { bigNumRecord, yourResultFunction } from "./function.js";
-
+// gjg++++++++++++++++++--------------------++++++++++++++++++------------------++++++++++++++------------------+++++++++++++++++-----------------++++++++++++fffffffffffff--------------rrrrrrrrrrrrrrrr++++++++++++++++++++++----------------rrrrrrrrrrrrrr++++++++++++++444444444444444444+++++++++++++ffffffffffffffffff-----------------fffffffffffffffffff++++++++++++++++ffffffffffffffffffff++++++++++++-----------------tttttttttttttttttttttt++++++++++++++++++ffffffffffffffffff
 let dir;
 let box = 60; // 32
 let snake = [];
 let counter = 0;
 let record = [];
 const filed = new Image();
+// zmei={
+//   top:0,
+//   left:0,
+//   speed:0,
+// }
 filed.src = "./png/field.png";
-const foodIMG = new Image();
-foodIMG.src = "./png/food.png";
 
 let food = {
-  x: Math.floor(Math.random() * 11) * box,
-  y: Math.floor(Math.random() * 11) * box,
+  x: Math.floor(Math.random() * 10) * box,
+  y: Math.floor(Math.random() * 10) * box,
 };
 
 canvas.addEventListener("click", dirSnake);
 
 snake[0] = { x: 5 * box, y: 5 * box };
 
+// таймауут перед играй
 function dirSnake() {
   setTimeout(() => {
     let score = 2;
@@ -66,7 +70,7 @@ function validityKey(event) {
     }
   }
 }
-
+// кушает себя
 function sneckAteHimself(newHead, arr) {
   for (let i = 0; i < arr.length; i++) {
     if (newHead.x == arr[i].x && newHead.y == arr[i].y) {
@@ -111,28 +115,36 @@ function drawField() {
   bigNumRecord();
   yourResultFunction(yourResult, names);
   ctx.drawImage(filed, 0, 0);
-  ctx.drawImage(foodIMG, food.x, food.y);
+  eda.style.top = `${food.x}px`;
+  eda.style.left = `${food.y}px`;
 
   let newHead = {
     x: snake[0].x,
     y: snake[0].y,
-
   };
-  
+
   for (let i = 0; i < snake.length; i++) {
     i == 0 ? (ctx.fillStyle = "#0C455B") : (ctx.fillStyle = "#6CBDDB");
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
   if (newHead.x == food.x && newHead.y == food.y) {
+    // debugger
     counter++;
+
     counterCheck.innerHTML = `у тебя ${counter} очков`;
-    food = {
-      x: Math.floor(Math.random() * 11) * box,
-      y: Math.floor(Math.random() * 11) * box,
-    };
+
+      eda.style.top = `${food.x}px`;
+      eda.style.left = `${food.y}px`;
+    // y: Math.floor(Math.random() * 11) * box,
   } else {
     snake.pop();
   }
+  // debugger
+
+
+  // console.log("еда y  " + food.y);
+  // console.log("Голова x  " + newHead.x);
+  // console.log("Голова y  " + newHead.y);
   if (
     newHead.x < 0 ||
     newHead.x > 10 * box ||
@@ -142,7 +154,7 @@ function drawField() {
     gameOverStart(newHead);
   }
   // один шаг
-  if (dir == "left") newHead.x -= box ;
+  if (dir == "left") newHead.x -= box;
   if (dir == "right") newHead.x += box;
   if (dir == "up") newHead.y -= box;
   if (dir == "down") newHead.y += box;
@@ -152,4 +164,5 @@ function drawField() {
   snake.unshift(newHead);
 }
 
+// function games() {}
 setInterval(drawField, 200);
