@@ -13,6 +13,7 @@ let box = 60; // 32
 let snake = [];
 let counter = 0;
 let record = [];
+
 const filed = new Image();
 // zmei={
 //   top:0,
@@ -114,37 +115,37 @@ function gameOverStart(newHead) {
 function drawField() {
   bigNumRecord();
   yourResultFunction(yourResult, names);
-  ctx.drawImage(filed, 0, 0);
-  eda.style.top = `${food.x}px`;
-  eda.style.left = `${food.y}px`;
+
+let sneckBody = document.createElement("div"); 
+// нарисвать див для змейки +++++++++++++++++++++++++++++++++++++++++++++++++
+
+  // ctx.drawImage(filed, 0, 0);
+  eda.style.top = `${food.y}px`;
+  eda.style.left = `${food.x}px`;
 
   let newHead = {
     x: snake[0].x,
     y: snake[0].y,
   };
-
   for (let i = 0; i < snake.length; i++) {
     i == 0 ? (ctx.fillStyle = "#0C455B") : (ctx.fillStyle = "#6CBDDB");
+    document.createElement
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
   if (newHead.x == food.x && newHead.y == food.y) {
-    // debugger
+
     counter++;
-
+    debugger
+    console.log(snake);
     counterCheck.innerHTML = `у тебя ${counter} очков`;
-
-      eda.style.top = `${food.x}px`;
-      eda.style.left = `${food.y}px`;
-    // y: Math.floor(Math.random() * 11) * box,
+    food = {
+      x: Math.floor(Math.random() * 10) * box,
+      y: Math.floor(Math.random() * 10) * box,
+    };
   } else {
     snake.pop();
   }
-  // debugger
 
-
-  // console.log("еда y  " + food.y);
-  // console.log("Голова x  " + newHead.x);
-  // console.log("Голова y  " + newHead.y);
   if (
     newHead.x < 0 ||
     newHead.x > 10 * box ||
