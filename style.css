@@ -2,18 +2,48 @@ body {
   margin: 0;
   padding: 0;
 }
-.field {
+.oneCell {
+  box-sizing: border-box;
+  /* border-radius: 50%; */
+  border: 1px solid white;
+  background: red;
+  width: 60px;
+  height: 60px;
+}
+.oneCellStep {
+  border-radius: 0;
+  background: green;
+  width: 60px;
+  height: 60px;
+}
+.filedNew {
+  background: orange;
+  width: 660px;
+  height: 660px;
   display: flex;
+  flex-wrap: wrap;
+}
+.field {
+  /* display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   position: relative;
   width: 660px;
+  height: 660px; */
+margin: 150px;
+position: relative;
+    background: orange;
+  width: 660px;
   height: 660px;
+  display: flex;
+  flex-wrap: wrap;
 }
+
 canvas {
   box-shadow: 0 0 66px 5px #6cbddb;
   position: relative;
+  display: none;
 }
 .eda {
   width: 60px;
@@ -22,17 +52,17 @@ canvas {
   box-sizing: border-box;
   border-radius: 50%;
   position: absolute;
-  background: #0C455B
+  background: #0c455b;
 }
 
-/* .zmei{
+.zmei {
   width: 60px;
   z-index: 3;
   height: 60px;
   box-sizing: border-box;
   position: absolute;
-  background: black
-} */
+  background: green;
+}
 .form {
   margin-top: 20%;
   display: flex;

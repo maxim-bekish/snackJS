@@ -116,10 +116,10 @@ function drawField() {
   bigNumRecord();
   yourResultFunction(yourResult, names);
 
-let sneckBody = document.createElement("div"); 
+
 // нарисвать див для змейки +++++++++++++++++++++++++++++++++++++++++++++++++
 
-  // ctx.drawImage(filed, 0, 0);
+  ctx.drawImage(filed, 0, 0);
   eda.style.top = `${food.y}px`;
   eda.style.left = `${food.x}px`;
 
@@ -135,7 +135,7 @@ let sneckBody = document.createElement("div");
   if (newHead.x == food.x && newHead.y == food.y) {
 
     counter++;
-    debugger
+    // debugger
     console.log(snake);
     counterCheck.innerHTML = `у тебя ${counter} очков`;
     food = {
