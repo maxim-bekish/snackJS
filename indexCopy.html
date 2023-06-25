@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake</title>
+  <link rel="stylesheet" href="./style.css">
+
+
+
+</head>
+
+<body>
+
+
+
+
+  <div id="game">
+    <div class="game-header">
+      <div class="game-score">
+        <span class='score-count'></span>
+      </div>
+    </div>
+    <div class="main">
+      <div class="canvas-wrapper">
+        <canvas width='660' height="660" id="game-canvas"> </canvas>
+      </div>
+
+    </div>
+    <form action="#" class='form' id="form">
+
+
+
+      <div class="wrap-child-form">
+        <span id="last_name"></span>
+        <span id="last_counter"></span>
+      </div>
+
+
+      <div class="wrap-child-form">
+        <span>Speed Snake</span>
+
+        <select  name="" id="setting_run">
+          <option id="select_lite" value="22">lite</option>
+          <option id="select_normal" selected value="15">normal</option>
+          <option id="select_hard" value="9">hard</option>
+        </select>
+      </div>
+
+      <div class="wrap-child-form" id="name_input_wrapper">Enter name
+
+        <input placeholder="Name" onkeypress="noDigits(event)" class="name" id="name_input" type="text"></input>
+
+      </div>
+      <button disabled class="start_game">Начать игру</button>
+
+      <span id='revers_time'></span>
+    </form>
+  </div>
+
+
+
+  <script src="./faceCopy.js"></script>
+  <!-- <script src="./allScript.js" ></script> -->
+</body>
+
+</html>
